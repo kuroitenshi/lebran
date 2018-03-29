@@ -14,7 +14,7 @@ else {
     $last_name = $_SESSION['last_name'];
     $email = $_SESSION['email'];
     $active = $_SESSION['active'];
-    $userId = $_SESSION['id'];
+    $userId = $_SESSION['userid'];
 }
 
 if (!empty($_POST)){

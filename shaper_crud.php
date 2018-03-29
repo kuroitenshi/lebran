@@ -1,6 +1,6 @@
 <?php 
 
-    $currentUserId = 10; //
+    $currentUserId = $_SESSION['userid']; 
     $remarks = $mysqli->query("SELECT * FROM remarks");
     $possibleCoShapers = $mysqli->query("SELECT * FROM USERS WHERE id  != '$currentUserId'");
 
