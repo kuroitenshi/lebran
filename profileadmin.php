@@ -16,6 +16,12 @@ else {
     $active = $_SESSION['active'];
     $userId = $_SESSION['id'];
 }
+
+if (!empty($_POST)){
+  $shaperId = $_POST['shaperId'];
+
+}
+
 ?>
 <!DOCTYPE html>
 <html >
@@ -87,21 +93,58 @@ else {
 
   <div class="container heading col-lg-12">
     <div class="panel panel-default">
+      <div class="panel-heading"><h4>Choose Shaper</h4></div>
+
+      <div class="panel-body">
+         <div class="form-group row col-md-12">
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+           <div class="col-md-4">
+            <label>Shaper</label>
+            <select name="shaperId" class="form-control chooseShaper">
+              <option></option>
+              <?php
+                $users = $mysqli->query("SELECT * FROM users");
+
+                while($userRow = mysqli_fetch_array($users)){
+                  echo '<option value='.$userRow['id']. '>'.$userRow['first_name']. ' ' .$userRow['last_name'].'</option>';
+                }
+              ?>
+            </select>
+           </div>
+          <div class="col-md-2">
+            <button type="submit" style="margin-top:19px;" class="btn btn-danger"><span class="glyphicon glyphicon-search"></span> Submit</button>
+          </div>
+           <div class="col-md-2 hide">
+            <label>Name </label>
+           </div>
+            <div class="col-md-2 hide">
+            <label>Level </label>
+           </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  <div class="shaperRecord hide">
+    <div class="panel panel-default">
         
         <div class="header panel-heading col-lg-12">
           <h4>Shaper Record</h4>
         </div>
 
-    <div class="shaperRecord panel-body">
+      <div class="panel-body">
         <div class="form-group col-md-4">
           <input type="text" class="form-control" placeholder="Filter"/>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-2">
            <select class="form-control" name="sortByMonth">
             <?php
               echo '<option></option>'
             ?>
            </select>
+         </div>
+         <div class="form-group col-md-2">
+          <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-plus-sign"></span> New</button>
          </div>
 
           <table class="table table-responsive table-bordered">
@@ -117,7 +160,7 @@ else {
             </thead>
             <tbody>
               <?php
-                $shaperRecord = $mysqli->query("SELECT * FROM shaper_record WHERE userId='$userId'");
+                $shaperRecord = $mysqli->query("SELECT * FROM shaper_record WHERE userId='$shaperId'");
 
                 if(!$shaperRecord)
                   trigger_error('Invalid query: ' . $mysqli->error);
@@ -129,7 +172,7 @@ else {
                       <td>'.$row["account"].'</td>
                       ';
 
-                      $coshapers = $mysqli->query("SELECT first_name FROM users as users INNER JOIN coshaper_map as coshaper WHERE coshaper.userID = '$userId' and users.id = coshaper.coshaperUserID and coshaper.shaperID = 
+                      $coshapers = $mysqli->query("SELECT first_name FROM users as users INNER JOIN coshaper_map as coshaper WHERE coshaper.userID = '$shaperId' and users.id = coshaper.coshaperUserID and coshaper.shaperID = 
                         " .$row["id"]. "");
 
                       if(!$coshapers)
@@ -158,6 +201,7 @@ else {
             </tbody>
           </table>
         </div>
+        </div>
       </div>
     </div>
   </div>
@@ -183,6 +227,25 @@ else {
               $('#hideme').css('padding-left', '20px');
             }
          });
+
+        var value = $('.chooseShaper').val(<?php echo '' .$shaperId. '' ?>);
+        console.log(value);
+
+        if(value != ''){
+          $('.shaperRecord').removeClass('hide');
+        }
+        else{
+          $('.shaperRecord').addClass('hide');
+        }
+
+         <?php 
+         if (!empty($_POST)){ ?>
+          
+          $('.chooseShaper').val(<?php echo '' .$shaperId. '' ?>);
+          console.log(<?php echo ''.$shaperId.''?>);
+          
+         <?php } 
+         ?>
      });
  </script>
 </body>

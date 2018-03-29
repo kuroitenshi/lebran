@@ -97,6 +97,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             </label>
             <input type="password"required autocomplete="off" name='password'/>
           </div>
+
+          <div class="field-wrap">
+            <label for="address">Address</label>
+            <input type="text" name="address"/>
+          </div>
+
+          <div class="field-wrap">
+            <h3>Birthday</h3>
+            <input type="date" name="birthday"/>
+          </div>
+          
+          <div class="field-wrap">
+            <h3>Upload Picture</h3>
+            <button class="" name="uploadPic" type="button">Upload</button>
+          </div>
+
+          <div class="field-wrap">
+            <h3>BDO Account Details</h3>
+          </div>
+
+          <div class="field-wrap">
+            <label for="accountName">Account Name</label>
+            <input type="text" required name="accountName"/>
+          </div>
+
+          <div class="field-wrap">
+            <label for="accountNumber">Account Number</label>
+            <input type="text" required name="accountNumber"/>
+          </div>
           
           <button type="submit" class="button button-block" name="register" />Register</button>
           
