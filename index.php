@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         </div>
           
         <div id="signup">   
-          <h1>Sign Up for Free</h1>
+          <h1>Sign Up</h1>
           
           <form action="index.php" method="post" autocomplete="off">
           
