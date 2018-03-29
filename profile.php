@@ -50,15 +50,6 @@ else {
             </li>
             <li>
                 <a href="#">About</a>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li><a href="#">Page 1</a></li>
-                    <li><a href="#">Page 2</a></li>
-                    <li><a href="#">Page 3</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">Portfolio</a>
             </li>
             <li>
                 <a href="#">Contact</a>
@@ -66,7 +57,13 @@ else {
         </ul>
 
         <ul class="list-unstyled CTAs">
-            
+            <li><span class="glyphicon glyphicon-object-align-bottom"></span> Position <span class="badge badge-secondary"> P1 - Associate 
+            </span></li>
+
+            <li>Recent Classes  <span class="glyphicon glyphicon-triangle-bottom"></span></li>
+
+            <li><span class="glyphicon glyphicon-flag"></span> SAMPLE</li>
+            <li><span class="glyphicon glyphicon-flag"></span> SAMPLE</li>
         </ul>
       </nav>
 
