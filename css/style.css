@@ -121,8 +121,8 @@ label .req {
 }
 
 label.active {
-  -webkit-transform: translateY(50px);
-          transform: translateY(50px);
+  -webkit-transform: translateY(-20px);
+          transform: translateY(-20px);
   left: 2px;
   font-size: 14px;
 }
@@ -204,4 +204,8 @@ textarea {
 .forgot {
   margin-top: -20px;
   text-align: right;
+}
+
+h3{
+  color: rgba(255, 255, 255, 0.5);
 }
