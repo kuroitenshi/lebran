@@ -98,7 +98,7 @@
              if($mysqli->query($coShaperSQL)){
 
              }else{
-                 echo "FAILED";
+                echo mysqli_error($mysqli);
              }
                  
             }
@@ -112,7 +112,7 @@
             if($mysqli->query($coShaperSQLDelete)){
 
             }else{
-                echo "FAILED";
+                echo mysqli_error($mysqli);
             }
 
             /**Delete Shaper Record */
@@ -120,7 +120,7 @@
             if($mysqli->query($shaperSQLDelete)){
 
             }else{
-                echo "FAILED";
+                echo mysqli_error($mysqli);
             }
 
 
