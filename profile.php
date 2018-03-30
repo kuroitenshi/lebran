@@ -29,45 +29,8 @@ else {
 <body>
   <!-- SIDE NAV BAR -->
  <div class="wrapper">
-   <nav id="sidebar">
-        <div class="sidebar-header">
-            <h3>Lebran</h3>
-        </div>
-
-        <ul class="list-unstyled components">
-          <div class="userPanel">
-            <div class="picture">
-              <img src="profileImages/<?php echo $profileDetails['head_shot'] ?>" width="50px" height="50px"/>
-            </div>
-            <h5>Name: <?php  echo '' .$first_name. ' ' .$last_name. ''; ?> </h5>
-          </div>
-
-            <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"><span class="glyphicon glyphicon-home">
-                </span> Home</a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li><a href="#"><span class="glyphicon glyphicon-file"></span> My Record</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">About</a>
-            </li>
-            <li>
-                <a href="#">Contact</a>
-            </li>
-        </ul>
-
-        <ul class="list-unstyled CTAs">
-            <li><span class="glyphicon glyphicon-object-align-bottom"></span> Position <span class="badge badge-secondary"> P1 - Associate 
-            </span></li>
-
-            <li>Recent Classes  <span class="glyphicon glyphicon-triangle-bottom"></span></li>
-
-            <li><span class="glyphicon glyphicon-flag"></span> SAMPLE</li>
-            <li><span class="glyphicon glyphicon-flag"></span> SAMPLE</li>
-        </ul>
-      </nav>
-
+  <?php include 'navbar.php' ?>
+  
   <div id="content">
 
     <div class="hideButton">

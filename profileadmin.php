@@ -35,44 +35,7 @@ if (!empty($_POST)){
 <body>
   <!-- SIDE NAV BAR -->
  <div class="wrapper">
-   <nav id="sidebar">
-        <div class="sidebar-header">
-            <h3>Lebran</h3>
-        </div>
-
-        <ul class="list-unstyled components">
-          <div class="userPanel">
-            <div class="picture">
-              <img src=profileImages/<?php echo $profileDetails['head_shot'] ?>" width="50px" height="50px"/>
-            </div>
-            <h5>Name: <?php  echo '' .$first_name. ' ' .$last_name. ''; ?> </h5>
-          </div>
-
-            <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"><span class="glyphicon glyphicon-home">
-                </span> Home</a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li><a href="#"><span class="glyphicon glyphicon-file"></span> My Record</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">About</a>
-            </li>
-            <li>
-                <a href="#">Contact</a>
-            </li>
-        </ul>
-
-        <ul class="list-unstyled CTAs">
-            <li><span class="glyphicon glyphicon-object-align-bottom"></span> Position <span class="badge badge-secondary"> P1 - Associate 
-            </span></li>
-
-            <li>Recent Classes  <span class="glyphicon glyphicon-triangle-bottom"></span></li>
-
-            <li><span class="glyphicon glyphicon-flag"></span> SAMPLE</li>
-            <li><span class="glyphicon glyphicon-flag"></span> SAMPLE</li>
-        </ul>
-      </nav>
+  <?php include 'navbar.php' ?>
 
   <div id="content">
 
@@ -113,7 +76,7 @@ if (!empty($_POST)){
             </select>
            </div>
           <div class="col-md-2">
-            <button type="submit" style="margin-top:19px;" class="btn btn-danger"><span class="glyphicon glyphicon-search"></span> Submit</button>
+            <button type="submit" style="margin-top:19px;" class="btn btn-success"><span class="glyphicon glyphicon-search"></span> Submit</button>
           </div>
            <div class="col-md-2 hide">
             <label>Name </label>
@@ -145,7 +108,7 @@ if (!empty($_POST)){
            </select>
          </div>
          <div class="form-group col-md-2">
-          <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-plus-sign"></span> New</button>
+          <button type="button" onclick="location.href = 'http://localhost/lebran/admin_shaper_add.php';" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> New</button>
          </div>
 
           <table class="table table-responsive table-bordered">
@@ -158,6 +121,7 @@ if (!empty($_POST)){
               <th>Rate</th>
               <th>Fee</th>
               <th>Deductions</th>
+              <th></th>
             </thead>
             <tbody>
               <?php
@@ -167,6 +131,7 @@ if (!empty($_POST)){
                   trigger_error('Invalid query: ' . $mysqli->error);
 
                 if ($shaperRecord->num_rows > 0 ){  
+                  echo '<form name="amendShaper" method="post" action="admin_shaper_modify.php">';
                  while($row = mysqli_fetch_array($shaperRecord)){
                     echo '<tr>
                       <td>'.$row["date"].'</td>
@@ -192,8 +157,13 @@ if (!empty($_POST)){
                         <td>'.$row["rate"].'</td>
                         <td>'.$row["fee"].'</td> 
                         <td>'.$row["deduction"].'</td>
+                        <td><button class="btn btn-success" onclick="shaperRecord('.$row["id"].')"><span class="glyphicon glyphicon-edit"></span></button>
+                        <button class="btn btn-danger" onclick=""><span class="glyphicon glyphicon-trash"></span></button>
+                        </td>
                         </tr>';
                   }
+                  echo '<input type="hidden" name="shaperRecord" class="getShaperRecord" value=""/>
+                  </form>';
                 }
                 else{
                   echo '<tr></tr>';
@@ -228,6 +198,11 @@ if (!empty($_POST)){
               $('#hideme').css('padding-left', '20px');
             }
          });
+
+         function shaperRecord(id){
+            $('.getShaperRecord').val(id);
+            console.log(id);
+         }
 
         var value = $('.chooseShaper').val(<?php echo '' .$shaperId. '' ?>);
         console.log(value);

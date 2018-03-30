@@ -56,7 +56,10 @@ require 'shaper_crud.php';
 
                   if($row['id'] == $coShaper['userid']){
                     $isChecked = true;
+
                   }
+
+                  echo $coShaper['userid'];
                 }
 
                 if($isChecked){
