@@ -20,7 +20,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#">About</a>
+                <a href="#" onclick="location.href = 'http://localhost/lebran/admin_shaper_talks.php';" >Shaper Talks</a>
             </li>
             <li>
                 <a href="#">Contact</a>

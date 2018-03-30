@@ -1,7 +1,6 @@
 <?php
 
     /** Amend Shaper Talk Session ID SET */
-    $_SESSION['shaperTalkToAmend'] = 0;
     if(isset($_SESSION['shaperTalkToAmend'])){
         $shaperTalkToAmend = $_SESSION['shaperTalkToAmend'];
         $shaperTalkToAmendResult = $mysqli->query("SELECT * FROM SHAPER_TALKS WHERE id  = '$shaperTalkToAmend'");
