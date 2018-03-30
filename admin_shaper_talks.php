@@ -96,10 +96,10 @@ if (!empty($_POST)){
                   trigger_error('Invalid query: ' . $mysqli->error);
 
                 if ($shaperTalksRecord->num_rows > 0 ){  
-                  echo '<form name="amendShaperTalk" method="post" action="admin_shaper_talk_modify.php">';
+                  echo '<form id="amendShaperTalk" method="post" action="admin_shaper_talk_modify.php">';
+                  $index = 0;
                  while($row = mysqli_fetch_array($shaperTalksRecord)){
-                    echo '<tr>
-                      <td data-comment-id='.$row["id"].' ></td>
+                    echo '<tr>         
                       <td>'.$row["account"].'</td>
                       <td>'.$row["topic"].'</td>                      
                       <td>'.$row["speaker"].'</td>
@@ -108,12 +108,15 @@ if (!empty($_POST)){
 
                      
                         echo'                        
-                        <td><button class="btn btn-success" onclick="shaperRecord('.$row["id"].')"><span class="glyphicon glyphicon-edit"></span></button>
-                        <button class="btn btn-danger" onclick=""><span class="glyphicon glyphicon-trash"></span></button>
+                        <td><button class="btn btn-success shaperTalkNum getShaperTalk'.$index.'" value="'.$row["id"].'"><span class="glyphicon glyphicon-edit"></span></button>
+                        <button  class="btn btn-danger shaperTalkNumDelete getShaperTalkDelete'.$index.'" value="'.$row["id"].'"" onclick=""><span class="glyphicon glyphicon-trash"></span></button>
                         </td>
                         </tr>';
+
+                        $index++;
                   }
-                  echo  '<input type="hidden" name="shaperRecord" class="getShaperRecord" value=""/>
+                  echo  '<input type="hidden" name="shaperTalkRecord" class="getShaperTalkRecord" value=""/>
+                  <input type="hidden" name="shaperTalkRecordToDelete" class="getShaperTalkRecordToDelete" value=""/>
                   </form>';
                 }
                 else{
@@ -133,6 +136,48 @@ if (!empty($_POST)){
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
  <script type="text/javascript">
+      var amendShaperTalkID;
+      var deleteShaperTalkID;
+      var empty;
+
+      $(".shaperTalkNum").each(function (index, element){
+          $( ".getShaperTalk" + index)
+          .mouseover(function() {
+            amendShaperTalkID = $('.getShaperTalk' + index).val();
+            empty = "";
+            deleteShaperTalkID = empty;
+          })
+          .mouseout(function() {
+            empty = "";
+            amendShaperTalkId = empty ;
+
+          });
+      });
+
+      $(".shaperTalkNumDelete").each(function (index, element){
+          $( ".getShaperTalkDelete" + index)
+          .mouseover(function() {
+            deleteShaperTalkID = $('.getShaperTalkDelete' + index).val();
+            empty = "";
+            amendShaperTalkId = empty ;
+          })
+          .mouseout(function() {
+            empty = "";
+            deleteShaperTalkID = empty;
+          });
+      });
+
+      $('#amendShaperTalk').submit(function() {
+
+        if(amendShaperTalkID != undefined)
+          $('.getShaperTalkRecord').val(amendShaperTalkID);
+       
+        else if(deleteShaperTalkID != undefined){
+          $('.getShaperTalkRecordToDelete').val(deleteShaperTalkID);
+       }
+      });
+
+
      $(document).ready(function () {
          $('#sidebarCollapse').on('click', function () {
              $('#sidebar').toggleClass('active');
@@ -150,28 +195,9 @@ if (!empty($_POST)){
          });
 
          function shaperRecord(id){
-            $('.getShaperRecord').val(id);
+            $('.getShaperTalkRecord').val(id);
             console.log(id);
          }
-
-        var value = $('.chooseShaper').val(<?php echo '' .$shaperId. '' ?>);
-        console.log(value);
-
-        if(value != ''){
-          $('.shaperRecord').removeClass('hide');
-        }
-        else{
-          $('.shaperRecord').addClass('hide');
-        }
-
-         <?php 
-         if (!empty($_POST)){ ?>
-          
-          $('.chooseShaper').val(<?php echo '' .$shaperId. '' ?>);
-          console.log(<?php echo ''.$shaperId.''?>);
-          
-         <?php } 
-         ?>
      });
  </script>
 </body>
