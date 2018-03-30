@@ -130,8 +130,9 @@ if (!empty($_POST)){
                 if(!$shaperRecord)
                   trigger_error('Invalid query: ' . $mysqli->error);
 
-                if ($shaperRecord->num_rows > 0 ){  
-                  echo '<form name="amendShaper" method="post" action="admin_shaper_modify.php">';
+                if ($shaperRecord->num_rows > 0 ){ 
+                  echo '<form id="amendShaper" method="post" action="admin_shaper_modify.php">';
+                  $index = 0;
                  while($row = mysqli_fetch_array($shaperRecord)){
                     echo '<tr>
                       <td>'.$row["date"].'</td>
@@ -157,10 +158,12 @@ if (!empty($_POST)){
                         <td>'.$row["rate"].'</td>
                         <td>'.$row["fee"].'</td> 
                         <td>'.$row["deduction"].'</td>
-                        <td><button class="btn btn-success" onclick="shaperRecord('.$row["id"].')"><span class="glyphicon glyphicon-edit"></span></button>
+                        <td><button class="btn btn-success shaperNum getShaper'.$index.'" value="'.$row["id"].'"><span class="glyphicon glyphicon-edit"></span></button>
                         <button class="btn btn-danger" onclick=""><span class="glyphicon glyphicon-trash"></span></button>
                         </td>
                         </tr>';
+
+                        $index++;
                   }
                   echo '<input type="hidden" name="shaperRecord" class="getShaperRecord" value=""/>
                   </form>';
@@ -183,6 +186,22 @@ if (!empty($_POST)){
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
  <script type="text/javascript">
+  var amendShaperId;
+
+    $(".shaperNum").each(function (index, element){
+         $( ".getShaper" + index)
+        .mouseover(function() {
+          amendShaperId = $('.getShaper' + index).val();
+        })
+        .mouseout(function() {
+         
+        });
+    });
+
+     $('#amendShaper').submit(function() {
+        $('.getShaperRecord').val(amendShaperId);
+    });
+
      $(document).ready(function () {
          $('#sidebarCollapse').on('click', function () {
              $('#sidebar').toggleClass('active');
@@ -198,11 +217,6 @@ if (!empty($_POST)){
               $('#hideme').css('padding-left', '20px');
             }
          });
-
-         function shaperRecord(id){
-            $('.getShaperRecord').val(id);
-            console.log(id);
-         }
 
         var value = $('.chooseShaper').val(<?php echo '' .$shaperId. '' ?>);
         console.log(value);

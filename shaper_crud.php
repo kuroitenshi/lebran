@@ -1,10 +1,12 @@
 <?php 
-
+    session_start();
     $currentUserId = $_SESSION['userid']; 
     $remarks = $mysqli->query("SELECT * FROM remarks");
     $possibleCoShapers = $mysqli->query("SELECT * FROM USERS WHERE id  != '$currentUserId'");
 
-    $_SESSION['shaperIDToAmend'] = 26;
+    if($_POST['shaperRecord'])
+        $_SESSION['shaperIDToAmend'] = $_POST['shaperRecord'];
+
     if(isset($_SESSION['shaperIDToAmend'])){
         $shaperIDToAmend = $_SESSION['shaperIDToAmend'];
         $shaperToAmendResult = $mysqli->query("SELECT * FROM SHAPER_RECORD WHERE id  = '$shaperIDToAmend'");
