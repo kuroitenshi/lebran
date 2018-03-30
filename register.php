@@ -14,7 +14,40 @@ $last_name = $mysqli->escape_string($_POST['lastname']);
 $email = $mysqli->escape_string($_POST['email']);
 $password = $mysqli->escape_string(password_hash($_POST['password'], PASSWORD_BCRYPT));
 $hash = $mysqli->escape_string( md5( rand(0,1000) ) );
-      
+$address = $mysqli->escape_string($_POST['address']);
+$birthday = $_POST['birthday'];
+$accountName = $mysqli->escape_string($_POST['accountName']);
+$accountNumber = $mysqli->escape_string($_POST['accountNumber']);
+if(isset($_FILES['profilePhoto'])){
+    
+    $errors= array();  
+    $file_size =$_FILES['profilePhoto']['size'];
+    $file_tmp =$_FILES['profilePhoto']['tmp_name'];
+    $file_type=$_FILES['profilePhoto']['type'];
+    $file_name_explode = explode('.',$_FILES['profilePhoto']['name']);
+    $file_ext = strtolower(end($file_name_explode));
+    $new_file_name = $first_name.' '.$last_name.".$file_ext";
+    
+    $expensions= array("jpeg","jpg","png");
+    
+    if(in_array($file_ext,$expensions)=== false){
+       $errors[]="File Extension not allowed, please choose a JPEG or PNG file.";
+    }
+    
+    if($file_size > 2097152){
+       $errors[]='Please only upload photos with file size up to 2 MB';
+    }
+    
+    if(empty($errors)==true){
+       move_uploaded_file($file_tmp,"profileImages/".$new_file_name);
+       echo "Success";
+    }else{
+       print_r($errors);
+    }
+ }
+
+
+
 // Check if user with that email already exists
 $result = $mysqli->query("SELECT * FROM users WHERE email='$email'") or die($mysqli->error());
 
@@ -31,6 +64,7 @@ else { // Email doesn't already exist in a database, proceed...
     $sql = "INSERT INTO users (first_name, last_name, email, password, hash) " 
             . "VALUES ('$first_name','$last_name','$email','$password', '$hash')";
 
+    
     // Add user to the database
     if ( $mysqli->query($sql) ){
 
@@ -55,7 +89,13 @@ else { // Email doesn't already exist in a database, proceed...
 
         mail( $to, $subject, $message_body );
 
-        header("location: profile.php"); 
+        $newUserId = $mysqli->insert_id;
+        $profileSQL = "INSERT INTO PROFILE (userID, head_shot, address, birthday, account_number, account_name, level)
+        VALUES ('$newUserId','$new_file_name','$address','$birthday','$accountNumber','$accountName',1)";
+
+        $mysqli->query($profileSQL);
+        //Add Confirmation Page
+        header("location: index.php"); 
 
     }
 

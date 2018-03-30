@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         <div id="signup">   
           <h1>Sign Up</h1>
           
-          <form action="index.php" method="post" autocomplete="off">
+          <form action="index.php" method="post" autocomplete="off" enctype="multipart/form-data">
           
           <div class="top-row">
             <div class="field-wrap">
@@ -95,22 +95,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <label>
               Set A Password<span class="req">*</span>
             </label>
-            <input type="password"required autocomplete="off" name='password'/>
+            <input type="password" required autocomplete="off" name='password'/>
           </div>
 
           <div class="field-wrap">
-            <label for="address">Address</label>
-            <input type="text" name="address"/>
+            <label for="address" >Address<span class="req">*</span></label>
+            <input type="text" required autocomplete="off" name="address"/>
           </div>
 
           <div class="field-wrap">
             <h3>Birthday</h3>
-            <input type="date" name="birthday"/>
+            <input type="date"  required name="birthday"/>
           </div>
           
           <div class="field-wrap">
-            <h3>Upload Picture</h3>
-            <button class="" name="uploadPic" type="button">Upload</button>
+            <h3>Upload Profile Photo</h3>
+            <input type="file" size="60" accept="image/*" name="profilePhoto" id = "profilePhoto"/>            
           </div>
 
           <div class="field-wrap">
@@ -137,8 +137,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
       
 </div> <!-- /form -->
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script>
+    $("document").ready(function(){
 
-    <script src="js/index.js"></script>
+      $("#profilePhoto").change(function() {
+          
+      });
+    });
+  </script>
+  <script src="js/index.js"></script>
 
 </body>
 </html>

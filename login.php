@@ -12,7 +12,7 @@ if ( $result->num_rows == 0 ){ // User doesn't exist
 else { // User exists
     $user = $result->fetch_assoc();
 
-    if ( $_POST['password'] == $user['password'] ) {
+    if ( $_POST['password'] == $user['password'] || password_verify ( $_POST['password'] , $user['password'])) {
         
         $_SESSION['userid'] = $user['id'];
         $_SESSION['email'] = $user['email'];

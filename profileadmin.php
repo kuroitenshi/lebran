@@ -2,6 +2,7 @@
 /* Displays user information and some useful messages */
 session_start();
 require 'db.php';
+require 'profile_crud.php';
 
 // Check if user is logged in using the session variable
 if ( $_SESSION['logged_in'] != 1 ) {
@@ -42,7 +43,7 @@ if (!empty($_POST)){
         <ul class="list-unstyled components">
           <div class="userPanel">
             <div class="picture">
-              <img src="img/default-user.png" width="50px" height="50px"/>
+              <img src=profileImages/<?php echo $profileDetails['head_shot'] ?>" width="50px" height="50px"/>
             </div>
             <h5>Name: <?php  echo '' .$first_name. ' ' .$last_name. ''; ?> </h5>
           </div>
