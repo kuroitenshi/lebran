@@ -95,6 +95,7 @@ else {
 
                       $coshapers = $mysqli->query("SELECT first_name FROM users as users INNER JOIN coshaper_map as coshaper WHERE coshaper.userID = '$userId' and users.id = coshaper.coshaperUserID and coshaper.shaperID = 
                         " .$row["id"]. "");
+                      $remarks = $mysqli->query("SELECT remarks_description from remarks where id=".$row["remarks"]);
 
                       if(!$coshapers)
                         trigger_error('Invalid query: ' . $mysqli->error);
@@ -106,8 +107,18 @@ else {
                         }
                         echo '</td>';
                       }
+
+                     if(!$remarks)
+                        trigger_error('Invalid query: ' . $mysqli->error);
+
+                      else{
+                        echo '<td>';
+                        while($row3 = mysqli_fetch_array($remarks)){
+                          echo '' .$row3["remarks_description"]. '<br>';
+                        }
+                        echo '</td>';
+                      }
                         echo'
-                        <td>'.$row["remarks"].'</td>
                         <td>'.$row["base"].'</td>
                         <td>'.$row["rate"].'</td>
                         <td>'.$row["fee"].'</td> 

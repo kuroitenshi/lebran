@@ -2,6 +2,8 @@
 
 require 'db.php';
 require 'shaper_crud.php';
+require 'profile_crud.php';
+include 'css/loadBootstrap.html';
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,22 +24,53 @@ require 'shaper_crud.php';
 </head>
 
 <body>
+ <div class="wrapper">
+  
+  <?php include 'navbar.php' ?>
 
-<h2> Update Shaper Record </h2>    
+<div id="content">
+  <div class="hideButton">
+        <div class="navbar-header">
+            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                <i class="glyphicon glyphicon-chevron-left" id="hideme"></i>
+                <span id="hidemetext">Hide</span>
+            </button>
+        </div>
+    </div>
 
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Edit Profile</a></li>
+              <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          </ul>
+      </div>
+
+  <ol class="breadcrumb">
+    <li><a href="profileadmin.php">Shaper Record</a></li>
+    <li class="active"><a href="#">Amend Shaper Record</a></li>
+  </ol>
+
+<div class="container col-lg-12">
+  <div class="panel panel-success">
+
+   <div class="panel-heading">
+       <h4> <span class="glyphicon glyphicon-plus"></span> Amend Shaper Record </h4> 
+  </div>
+
+  <div class="panel-content">
    <form action="admin_shaper_modify.php" method="post" autocomplete="off">
         
-    <div class="field-wrap">
+    <div class="form-group">
         <label> Record Date:  <span class="req"></span> </label>
-                    <input type="date" required name="record_date" value = "<?php echo $shaperRecordToAmend['date']; ?>" >
+        <input type="date" required name="record_date" class="form-control" value = "<?php echo $shaperRecordToAmend['date']; ?>" >
     </div>
     <br>
-    <div class="field-wrap">
+    <div class="form-group">
         <label> Account:  <span class="req"></span> </label>
-                <input type="text" required autocomplete="off" name='record_account' value = "<?php echo $shaperRecordToAmend['account']; ?>"/>
+        <input type="text" required autocomplete="off" class="form-control" name='record_account' value = "<?php echo $shaperRecordToAmend['account']; ?>"/>
     </div>
     <br>
-    <div class="field-wrap">      
+    <div class="form-group">      
         <label> CoShapers:  <span class="req"></span> </label>
         <table border="1" style="width:100%" id="coShapersTable">
             <tr>
@@ -58,8 +91,6 @@ require 'shaper_crud.php';
                     $isChecked = true;
 
                   }
-
-                  echo $coShaper['userid'];
                 }
 
                 if($isChecked){
@@ -117,8 +148,10 @@ require 'shaper_crud.php';
       <button type="submit" class="button" id = "updateShaperRecord" name="updateShaperRecord" />Save</button>
           
     </form>
-
-  
+  </div>
+</div>
+</div>
+ 
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script>
      

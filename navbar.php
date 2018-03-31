@@ -1,3 +1,8 @@
+<?php 
+$first_name = $_SESSION['first_name'];
+$last_name = $_SESSION['last_name'];
+?>
+
  <nav id="sidebar">
         <div class="sidebar-header">
             <div class="imagehere"></div>
