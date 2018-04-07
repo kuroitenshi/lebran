@@ -116,6 +116,8 @@ else {
                   
                   $shapersAssigned = $mysqli->query("SELECT first_name, last_name FROM users inner join shaper_map where shaper_map.account_id = ".$row["id"]. " and shaper_map.user_id = users.id");
                   $headAssigned = $mysqli->query("SELECT first_name, last_name FROM users inner join head_map where head_map.account_id = ".$row["id"]. " and head_map.user_id = users.id");
+                  $levelList = $mysqli->query("SELECT * FROM level WHERE id=" .$row["level"]);
+                  $remarks = $mysqli->query("SELECT * FROM remarks WHERE id=" .$row["remarks"]);
 
                     echo '<tr>         
                       <td>'.$row["name"].'</td>
@@ -133,7 +135,6 @@ else {
 
                       if($headAssigned->num_rows != 0){
                         echo '<td>';
-                        $index2 = 0;
                         while($row2 = mysqli_fetch_array($headAssigned)){                    
                           echo $row2["first_name"].' '.$row2["last_name"]. '<br>';
                         }
@@ -142,9 +143,17 @@ else {
                       else
                         echo '<td></td>';
 
-                    echo'
-                    <td>'.$row["level"].'</td>
-                    <td>'.$row["remarks"].'</td>
+                      echo '<td>';
+                        while($row2 = mysqli_fetch_array($levelList)){                    
+                          echo $row2["level_name"].' '.$row2["level_description"]. '<br>';
+                        }
+                      echo '</td>';
+                    
+                    echo'<td>'; 
+                    while($row2 = mysqli_fetch_array($remarks)){                    
+                          echo $row2["remarks_description"].' ';
+                    }
+                    echo  $row['additional_remarks'].'</td>
                     <td>'.$row["base"].'</td>
                     <td>'.$row["rate"].'</td>
                     <td>'.$row["shapers_share"].'</td>

@@ -38,7 +38,6 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') 
     {
         if (isset($_POST['submitNewShaperRecord'])) { //Add new Shaper Record
-            echo 'DITO DUMAAN';
             $record_date = $_POST['record_date'];
             $record_account = $mysqli->escape_string($_POST['record_account']);
             $record_remark = $mysqli->escape_string($_POST['record_remark']);
@@ -114,13 +113,11 @@
 
             
         }else if(strlen($_SESSION['shaperIDToDelete']) != 0) {
-            echo 'DITO DUMAAN ' .$_SESSION['shaperIDToDelete'];
             /**Delete CoShaper Mappings */
             $coShaperSQLDelete = "DELETE FROM COSHAPER_MAP WHERE shaperID = '$shaperIDToDelete'";
             if($mysqli->query($coShaperSQLDelete)){
 
             }else{
-                echo 'ERROR KASI';
                 echo mysqli_error($mysqli);
             }
 
@@ -131,7 +128,6 @@
                  header("location: profileadmin.php");
 
             }else{
-                echo 'ETO TALAGA ERROR';
                 echo mysqli_error($mysqli);
             }
 

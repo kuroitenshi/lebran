@@ -93,7 +93,11 @@ include 'css/loadBootstrap.html'
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label> Level:  <span class="req"></span> </label>
-                                <input type="text" class="form-control" autocomplete="off" name='level' />
+                         <select class="form-control" name="level">
+                             <?php foreach($levelList as $level): ?>
+                                <option value="<?= $level['id']; ?>"><?php echo $level['level_name']. ' ' .$level['level_description']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
