@@ -36,21 +36,8 @@ require 'profile_crud.php';
   <?php include 'navbar.php' ?>
 
 <div id="content">
- <div class="hideButton">
-        <div class="navbar-header">
-            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                <i class="glyphicon glyphicon-chevron-left" id="hideme"></i>
-                <span id="hidemetext">Hide</span>
-            </button>
-        </div>
-    </div>
-
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Edit Profile</a></li>
-              <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-          </ul>
-      </div>
+ 
+ <?php include 'topnavbar.html' ?>
 
 <ol class="breadcrumb">
   <li><a href="profileadmin.php">Shaper Record</a></li>
@@ -133,10 +120,16 @@ require 'profile_crud.php';
                   <input type="number" readonly autocomplete="off" class="form-control" id= "record_fee" name='record_fee' value = '1'/>
       </div>
     </div>     
-          
-      <button type="submit" class="btn btn-success pull-right" id = "submitNewShaperRecord" name="submitNewShaperRecord" /><span class="glyphicon glyphicon-save"></span> Save</button>
+    
+    <div class="row" style="margin-top:10px;">  
+      <button type="submit" class="btn btn-success col-md-2 pull-right right" id = "submitNewShaperRecord" name="submitNewShaperRecord" /><span class="glyphicon glyphicon-save"></span> Save</button>
           
     </form>
+
+      <button class="btn btn-default col-md-2 pull-right" type="button" onClick="location.href='profileadmin.php'">Cancel
+      </button>
+    </div>
+
   </div>
 </div>
 </div>

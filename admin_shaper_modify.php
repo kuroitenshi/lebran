@@ -29,21 +29,8 @@ include 'css/loadBootstrap.html';
   <?php include 'navbar.php' ?>
 
 <div id="content">
-  <div class="hideButton">
-        <div class="navbar-header">
-            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                <i class="glyphicon glyphicon-chevron-left" id="hideme"></i>
-                <span id="hidemetext">Hide</span>
-            </button>
-        </div>
-    </div>
-
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Edit Profile</a></li>
-              <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-          </ul>
-      </div>
+  
+  <?php include 'topnavbar.html' ?>
 
   <ol class="breadcrumb">
     <li><a href="profileadmin.php">Shaper Record</a></li>
@@ -54,99 +41,108 @@ include 'css/loadBootstrap.html';
   <div class="panel panel-success">
 
    <div class="panel-heading">
-       <h4> <span class="glyphicon glyphicon-plus"></span> Amend Shaper Record </h4> 
+       <h4> <span class="glyphicon glyphicon-edit"></span> Amend Shaper Record </h4> 
   </div>
 
-  <div class="panel-content">
+  <div class="panel-body">
    <form action="admin_shaper_modify.php" method="post" autocomplete="off">
-        
-    <div class="form-group">
-        <label> Record Date:  <span class="req"></span> </label>
-        <input type="date" required name="record_date" class="form-control" value = "<?php echo $shaperRecordToAmend['date']; ?>" >
+
+    <div class="row">
+      <div class="form-group col-md-6">
+          <label> Record Date:  <span class="req"></span> </label>
+          <input type="date" required name="record_date" class="form-control" value = "<?php echo $shaperRecordToAmend['date']; ?>" >
+      </div>
+      <div class="form-group col-md-6">
+          <label> Account:  <span class="req"></span> </label>
+          <input type="text" required autocomplete="off" class="form-control" name='record_account' value = "<?php echo $shaperRecordToAmend['account']; ?>"/>
+      </div>
     </div>
-    <br>
-    <div class="form-group">
-        <label> Account:  <span class="req"></span> </label>
-        <input type="text" required autocomplete="off" class="form-control" name='record_account' value = "<?php echo $shaperRecordToAmend['account']; ?>"/>
-    </div>
-    <br>
-    <div class="form-group">      
-        <label> CoShapers:  <span class="req"></span> </label>
-        <table border="1" style="width:100%" id="coShapersTable">
-            <tr>
-                <th> <input type="checkbox"  /></th>
-                <th>Firstname</th>
-                <th>Lastname</th>                 
-            </tr>
 
-             <?php
-              while ($row = mysqli_fetch_array($possibleCoShapers)) {
-                echo ('<tr>');
-                
-                $isChecked = false;
+    <div class="row">
+      <div class="form-group col-md-12">      
+          <label> CoShapers:  <span class="req"></span> </label>
+          <table class="table table-responsive table-condensed table-striped" id="coShapersTable">
+              <tr>
+                  <th> <input type="checkbox"  /></th>
+                  <th>Firstname</th>
+                  <th>Lastname</th>                 
+              </tr>
 
-                foreach ($shaperRecoredToAmendCoShapersQuery as $coShaper) {
+               <?php
+                while ($row = mysqli_fetch_array($possibleCoShapers)) {
+                  echo ('<tr>');
+                  
+                  $isChecked = false;
 
-                  if($row['id'] == $coShaper['userid']){
-                    $isChecked = true;
+                  foreach ($shaperRecoredToAmendCoShapersQuery as $coShaper) {
 
+                    if($row['id'] == $coShaper['userid']){
+                      $isChecked = true;
+
+                    }
                   }
-                }
 
-                if($isChecked){
-                  echo ('<td><input type="checkbox"/ checked>&nbsp;</td>');
-                }else{
-                  echo ('<td><input type="checkbox"/ >&nbsp;</td>');
-                }
-                  echo ('<td style="display:none;" class="coShaperID">'.$row['id'].'</td>');
-                  echo ('<td>'.$row['first_name'].'</td>');
-                  echo ('<td>'.$row['last_name'].'</td>');
-                  echo ('</tr>');    
-                } 
-             ?>
+                  if($isChecked){
+                    echo ('<td><input type="checkbox"/ checked>&nbsp;</td>');
+                  }else{
+                    echo ('<td><input type="checkbox"/ >&nbsp;</td>');
+                  }
+                    echo ('<td style="display:none;" class="coShaperID">'.$row['id'].'</td>');
+                    echo ('<td>'.$row['first_name'].'</td>');
+                    echo ('<td>'.$row['last_name'].'</td>');
+                    echo ('</tr>');    
+                  } 
+               ?>
+               
+          </table>
+      </div>
+      <input type="hidden" id="record_coshapers" name="record_coshapers" value="" />
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-4">      
+          <label> Remarks:  <span class="req"></span> </label>
+          <select class="form-control" name="record_remark">
+          <?php
              
-        </table>
-    </div>
-    <input type="hidden" id="record_coshapers" name="record_coshapers" value="" />
-    <br>
-    <div class="field-wrap">      
-        <label> Remarks:  <span class="req"></span> </label>
-        <select name="record_remark">
-        <?php
-           
-            foreach ($remarks as $remark) {
-                if ($remark['id'] == $shaperRecordToAmendRemark['id']) {
-                    echo('<option selected="selected" value='.$remark['id'].'>'.$remark['remarks_description'].'</option>');
-                } else {
-                    echo('<option value='.$remark['id'].'>'.$remark['remarks_description'].'</option>');
-                }
-            }
-        ?>
-        </select>
-    </div>
-    <br>
-
-    <div class="field-wrap">      
-        <label> Base:  <span class="req"></span> </label>
-                <input type="number" required autocomplete="off" id= "record_base" name='record_base' value = "<?php echo $shaperRecordToAmend['base']; ?>" oninput="CalculateFee()"/>
-    </div>
-    <br>
-
-    <div class="field-wrap">      
-        <label> Rate:  <span class="req"></span> </label>
-                <input type="number" required autocomplete="off" id= "record_rate" name='record_rate' value = "<?php echo $shaperRecordToAmend['rate']; ?>" oninput="CalculateFee()"/>    
-    </div>
-    <br>
-
-    <div class="field-wrap">      
-        <label> Fee:  <span class="req"></span> </label>
-                <input type="number" readonly autocomplete="off" id= "record_fee" name='record_fee' value = "<?php echo $shaperRecordToAmend['fee']; ?>"/>
+              foreach ($remarks as $remark) {
+                  if ($remark['id'] == $shaperRecordToAmendRemark['id']) {
+                      echo('<option selected="selected" value='.$remark['id'].'>'.$remark['remarks_description'].'</option>');
+                  } else {
+                      echo('<option value='.$remark['id'].'>'.$remark['remarks_description'].'</option>');
+                  }
+              }
+          ?>
+          </select>
+      </div>
+      <div class="form-group col-md-8">
+        <label for="record_remark_add">Additional Remarks</label>
+        <input type="text" class="form-control" name="record_remark_add" placeholder="Additional Remarks"/>
+      </div>
     </div>
 
-    <br>     
-          
-      <button type="submit" class="button" id = "updateShaperRecord" name="updateShaperRecord" />Save</button>
-          
+    <div class="row">
+      <div class="form-group col-md-4">      
+          <label> Base:  <span class="req"></span> </label>
+          <input type="number" required autocomplete="off" id= "record_base" name='record_base' value = "<?php echo $shaperRecordToAmend['base']; ?>" oninput="CalculateFee()" class="form-control"/>
+      </div>
+
+      <div class="form-group col-md-4">      
+          <label> Rate:  <span class="req"></span> </label>
+          <input type="number" required autocomplete="off" id= "record_rate" name='record_rate' value = "<?php echo $shaperRecordToAmend['rate']; ?>" oninput="CalculateFee()" class="form-control"/>    
+      </div>
+
+      <div class="form-group col-md-4">      
+          <label> Fee:  <span class="req"></span> </label>
+          <input type="number" readonly autocomplete="off" id= "record_fee" name='record_fee' value = "<?php echo $shaperRecordToAmend['fee']; ?>" class="form-control"/>
+      </div>   
+    </div>  
+
+    <div class="row top">
+      <button type="submit" class="btn btn-success col-md-2 pull-right right" id = "updateShaperRecord" name="updateShaperRecord" />Save</button>
+      <button type="button" class="btn btn-default col-md-2 pull-right" onClick="location.href='profileadmin.php'">Cancel</button>    
+    </div>
+
     </form>
   </div>
 </div>
@@ -166,8 +162,11 @@ include 'css/loadBootstrap.html';
     });
         
     });
-  </script>
-  <script src="js/index.js"></script>
 
+    $(document).ready(function () {
+        //$('.list-unstyled').find('li')
+    });
+  </script>
+  <script src="js/hideButton.js"></script>
 </body>
 </html>

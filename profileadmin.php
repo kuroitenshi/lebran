@@ -9,6 +9,7 @@ if ( $_SESSION['logged_in'] != 1 ) {
   $_SESSION['message'] = "You must log in before viewing your profile page!";
   header("location: error.php");    
 }
+
 else {
     // Makes it easier to read
     $first_name = $_SESSION['first_name'];
@@ -56,6 +57,19 @@ if (!empty($_POST)){
       </div>
 
   <div class="container heading col-lg-12">
+    <div class="row">
+      <div class="alert alert-success alert-dismissible hide" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5><?php 
+          if(isset($_SESSION['message'])){
+            echo $_SESSION['message'];
+          }
+          ?></h5>
+      </div>
+    </div>
+
     <div class="panel panel-default">
       <div class="panel-heading"><h4>Choose Shaper</h4></div>
 
@@ -141,6 +155,7 @@ if (!empty($_POST)){
 
                       $coshapers = $mysqli->query("SELECT first_name FROM users as users INNER JOIN coshaper_map as coshaper WHERE coshaper.userID = '$shaperId' and users.id = coshaper.coshaperUserID and coshaper.shaperID = 
                         " .$row["id"]. "");
+                      $remarks = $mysqli->query("SELECT remarks_description from remarks where id=".$row["remarks"]);
 
                       if(!$coshapers)
                         trigger_error('Invalid query: ' . $mysqli->error);
@@ -152,20 +167,31 @@ if (!empty($_POST)){
                         }
                         echo '</td>';
                       }
+
+                      if(!$remarks)
+                        trigger_error('Invalid query: ' . $mysqli->error);
+
+                      else{
+                        echo '<td>';
+                        while($row3 = mysqli_fetch_array($remarks)){
+                          echo '' .$row3["remarks_description"]. '<br>';
+                        }
+                        echo '</td>';
+                      }
                         echo'
-                        <td>'.$row["remarks"].'</td>
                         <td>'.$row["base"].'</td>
                         <td>'.$row["rate"].'</td>
                         <td>'.$row["fee"].'</td> 
                         <td>'.$row["deduction"].'</td>
                         <td><button class="btn btn-success shaperNum getShaper'.$index.'" value="'.$row["id"].'"><span class="glyphicon glyphicon-edit"></span></button>
-                        <button class="btn btn-danger" onclick=""><span class="glyphicon glyphicon-trash"></span></button>
+                        <button class="btn btn-danger shaperNumDelete getShaperDelete'.$index.'" value="'.$row["id"].'" id="deleteShaperRecord"><span class="glyphicon glyphicon-trash"></span></button>
                         </td>
                         </tr>';
 
                         $index++;
                   }
                   echo '<input type="hidden" name="shaperRecord" class="getShaperRecord" value=""/>
+                  <input type="hidden" name="shaperRecordToDelete" class="getShaperRecordToDelete" value=""/>
                   </form>';
                 }
                 else{
@@ -187,6 +213,7 @@ if (!empty($_POST)){
 
  <script type="text/javascript">
   var amendShaperId;
+  var deleteShaperTalkID;
 
     $(".shaperNum").each(function (index, element){
          $( ".getShaper" + index)
@@ -194,12 +221,25 @@ if (!empty($_POST)){
           amendShaperId = $('.getShaper' + index).val();
         })
         .mouseout(function() {
-         
+          amendShaperId = null;
         });
     });
 
      $('#amendShaper').submit(function() {
+      if(amendShaperId !== null && amendShaperId !== undefined)
         $('.getShaperRecord').val(amendShaperId);
+      else if(deleteShaperTalkID !== null && deleteShaperTalkID !== undefined)
+        $('.getShaperRecordToDelete').val(deleteShaperTalkID);
+    });
+
+    $(".shaperNumDelete").each(function (index, element){
+        $( ".getShaperDelete" + index)
+        .mouseover(function() {
+          deleteShaperTalkID = $('.getShaperDelete' + index).val();
+        })
+        .mouseout(function() {
+          deleteShaperTalkID = null;
+        });
     });
 
      $(document).ready(function () {
@@ -218,7 +258,7 @@ if (!empty($_POST)){
             }
          });
 
-        var value = $('.chooseShaper').val(<?php echo '' .$shaperId. '' ?>);
+        var value = $('.chooseShaper').val(<?php if(isset($shaperId)) echo '' .$shaperId. ''; else echo ''; ?>);
         console.log(value);
 
         if(value != ''){
@@ -235,7 +275,25 @@ if (!empty($_POST)){
           console.log(<?php echo ''.$shaperId.''?>);
           
          <?php } 
+
+          if(empty($_SESSION['message'])){
          ?>
+          if($(".alert-success").hasClass("hide")){
+
+          }
+          else
+            $(".alert-success").addClass("hide");
+
+         <?php }else{ ?>
+          if($(".alert-success").hasClass("hide")){
+            $(".alert-success").removeClass("hide");
+
+            <?php unset($_SESSION['message'])?>
+          }
+
+          <?php } ?>
+
+          $('.list-unstyled li:nth-child(2)').addClass('active');
      });
  </script>
 </body>

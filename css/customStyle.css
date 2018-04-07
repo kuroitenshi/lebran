@@ -236,7 +236,6 @@ a.article, a.article:hover {
 
 .shaperRecord .form-group{
     margin-top: 20px !important;
-    margin-left:-15px;
 }
 
 .shaperRecord .row .form-control{
@@ -318,3 +317,28 @@ table td{
 
 .nav-tabs a {
     background-color: #FFFF !important;} 
+
+.right{
+    margin-right: 15px;
+}
+
+.top{
+    margin-top: 10px;
+}
+
+.panel-body > .form-group{
+    padding-left:0px;
+}
+
+.panel-heading .imagehere{
+    background: url('../img/lebran-logo.png');
+    width: 50px;
+    height: 50px;
+    margin-left:10px;
+}
+
+.image{
+    display: inline-flex;
+    width: 100%;
+    padding-left:34%;
+}

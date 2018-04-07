@@ -56,10 +56,23 @@ if (!empty($_POST)){
       </div>
 
   <div class="container heading col-lg-12">
+     <div class="row">
+      <div class="alert alert-success alert-dismissible hide" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h5><?php 
+          if(isset($_SESSION['message'])){
+            echo $_SESSION['message'];
+          }
+          ?></h5>
+      </div>
+    </div>
+
     <div class="panel panel-default">
         
         <div class="header panel-heading col-lg-12">
-          <h4>Shaper Talks</h4>
+          <h4>Schedule of Talks</h4>
         </div>
 
       <div class="panel-body">
@@ -109,7 +122,7 @@ if (!empty($_POST)){
                      
                         echo'                        
                         <td><button class="btn btn-success shaperTalkNum getShaperTalk'.$index.'" value="'.$row["id"].'"><span class="glyphicon glyphicon-edit"></span></button>
-                        <button  class="btn btn-danger shaperTalkNumDelete getShaperTalkDelete'.$index.'" value="'.$row["id"].'"" onclick=""><span class="glyphicon glyphicon-trash"></span></button>
+                        <button class="btn btn-danger shaperTalkNumDelete getShaperTalkDelete'.$index.'" value="'.$row["id"].'""><span class="glyphicon glyphicon-trash"></span></button>
                         </td>
                         </tr>';
 
@@ -138,19 +151,14 @@ if (!empty($_POST)){
  <script type="text/javascript">
       var amendShaperTalkID;
       var deleteShaperTalkID;
-      var empty;
 
       $(".shaperTalkNum").each(function (index, element){
           $( ".getShaperTalk" + index)
           .mouseover(function() {
             amendShaperTalkID = $('.getShaperTalk' + index).val();
-            empty = "";
-            deleteShaperTalkID = empty;
           })
           .mouseout(function() {
-            empty = "";
-            amendShaperTalkId = empty ;
-
+            amendShaperTalkID = null;
           });
       });
 
@@ -158,21 +166,18 @@ if (!empty($_POST)){
           $( ".getShaperTalkDelete" + index)
           .mouseover(function() {
             deleteShaperTalkID = $('.getShaperTalkDelete' + index).val();
-            empty = "";
-            amendShaperTalkId = empty ;
           })
           .mouseout(function() {
-            empty = "";
-            deleteShaperTalkID = empty;
+            deleteShaperTalkID = null;
           });
       });
 
       $('#amendShaperTalk').submit(function() {
-
-        if(amendShaperTalkID != undefined)
+        if(amendShaperTalkID !== undefined && amendShaperTalkID !== null){
           $('.getShaperTalkRecord').val(amendShaperTalkID);
+        }
        
-        else if(deleteShaperTalkID != undefined){
+        else if(deleteShaperTalkID != undefined && deleteShaperTalkID != null){
           $('.getShaperTalkRecordToDelete').val(deleteShaperTalkID);
        }
       });
@@ -194,10 +199,26 @@ if (!empty($_POST)){
             }
          });
 
-         function shaperRecord(id){
-            $('.getShaperTalkRecord').val(id);
-            console.log(id);
-         }
+         <?php
+
+          if(empty($_SESSION['message'])){
+         ?>
+          if($(".alert-success").hasClass("hide")){
+
+          }
+          else
+            $(".alert-success").addClass("hide");
+
+         <?php }else{ ?>
+          if($(".alert-success").hasClass("hide")){
+            $(".alert-success").removeClass("hide");
+
+            <?php unset($_SESSION['message'])?>
+          }
+
+          <?php } ?>
+
+          $('.list-unstyled li:nth-child(3)').addClass('active');
      });
  </script>
 </body>

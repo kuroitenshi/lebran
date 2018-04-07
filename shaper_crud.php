@@ -5,17 +5,20 @@
     $possibleCoShapers = $mysqli->query("SELECT * FROM USERS WHERE id  != '$currentUserId'");
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if($_POST['shaperRecord'])
+        if(isset($_POST['shaperRecord']))
             $_SESSION['shaperIDToAmend'] = $_POST['shaperRecord'];
+
+         if(isset($_POST['shaperRecordToDelete']))
+             $_SESSION['shaperIDToDelete'] = $_POST['shaperRecordToDelete'];
     }
 
-    if(isset($_SESSION['shaperIDToAmend'])){
+    if(strlen($_SESSION['shaperIDToAmend']) != 0){
         $shaperIDToAmend = $_SESSION['shaperIDToAmend'];
         $shaperToAmendResult = $mysqli->query("SELECT * FROM SHAPER_RECORD WHERE id  = '$shaperIDToAmend'");
         
         if ( $shaperToAmendResult->num_rows == 0 ){ 
             $_SESSION['message'] = "Shaper Record doesn't exist!";
-            header("location: error.php");
+            //header("location: error.php");
         }else{
             $shaperRecordToAmend = $shaperToAmendResult->fetch_assoc();
             $remarksIDSelected = $shaperRecordToAmend['remarks'];                         
@@ -27,7 +30,7 @@
         }
     }
 
-    if(isset($_SESSION['shaperIDToDelete'])){
+    if(strlen($_SESSION['shaperIDToDelete']) != 0){
         $shaperIDToDelete = $_SESSION['shaperIDToDelete'];
     }
 
@@ -35,7 +38,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') 
     {
         if (isset($_POST['submitNewShaperRecord'])) { //Add new Shaper Record
-
+            echo 'DITO DUMAAN';
             $record_date = $_POST['record_date'];
             $record_account = $mysqli->escape_string($_POST['record_account']);
             $record_remark = $mysqli->escape_string($_POST['record_remark']);
@@ -62,7 +65,7 @@
                 VALUES ($currentUserId, $coShaperID, $newShaperId);";
 
                 if($mysqli->query($coShaperSQL)){
-                    echo "New Shaper Successfully Added !";
+                    $_SESSION['message'] = 'New Shaper Successfully Added !';
 
                 }else{
                     $_SESSION['message'] = 'Addition of new Shaper Failed!';
@@ -70,9 +73,10 @@
                     header("location: error.php");
                 }
            }
+
+           header("location:profileadmin.php");
                 
         }else if(isset($_POST['updateShaperRecord'])){
-
             $record_date = $_POST['record_date'];
             $record_account = $mysqli->escape_string($_POST['record_account']);
             $record_remark = $mysqli->escape_string($_POST['record_remark']);
@@ -100,30 +104,34 @@
              VALUES ($currentUserId, $coShaperIDUpdate, $shaperIDToAmend);";
 
              if($mysqli->query($coShaperSQL)){
-
+                 $_SESSION['message'] = 'Shaper Successfully Amended!';
              }else{
                 echo mysqli_error($mysqli);
-             }
-                 
+             }     
             }
 
+            header("location:profileadmin.php");
 
             
-        }else if(isset($_POST['deleteShaperRecord'])) {
-
+        }else if(strlen($_SESSION['shaperIDToDelete']) != 0) {
+            echo 'DITO DUMAAN ' .$_SESSION['shaperIDToDelete'];
             /**Delete CoShaper Mappings */
-            $coShaperSQLDelete = "DELETE FROM COSHAPER_MAP WHERE SHAPERID = '$shaperIDToDelete'";
+            $coShaperSQLDelete = "DELETE FROM COSHAPER_MAP WHERE shaperID = '$shaperIDToDelete'";
             if($mysqli->query($coShaperSQLDelete)){
 
             }else{
+                echo 'ERROR KASI';
                 echo mysqli_error($mysqli);
             }
 
             /**Delete Shaper Record */
-            $shaperSQLDelete = "DELETE FROM SHAPER_RECORD WHERE SHAPERID = '$shaperIDToDelete'";
+            $shaperSQLDelete = "DELETE FROM SHAPER_RECORD WHERE id = '$shaperIDToDelete'";
             if($mysqli->query($shaperSQLDelete)){
+                 $_SESSION['message'] = 'Shaper Successfully Deleted!';
+                 header("location: profileadmin.php");
 
             }else{
+                echo 'ETO TALAGA ERROR';
                 echo mysqli_error($mysqli);
             }
 

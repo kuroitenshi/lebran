@@ -1,6 +1,15 @@
 <?php 
 $first_name = $_SESSION['first_name'];
 $last_name = $_SESSION['last_name'];
+
+if (isset($profileDetails['id']) == 1){
+    $row = $mysqli->query("SELECT level_name, level_description from level where id = " .$profileDetails['level']);
+    $profileRow = $row -> fetch_assoc();
+
+    $levelName = $profileRow['level_name'];
+    $levelDesc = $profileRow['level_description'];
+}
+
 ?>
 
  <nav id="sidebar">
@@ -17,28 +26,25 @@ $last_name = $_SESSION['last_name'];
             <h5><?php  echo '' .$first_name. ' ' .$last_name. ''; ?> </h5>
           </div>
 
-            <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"><span class="glyphicon glyphicon-home">
+            <li>
+                <a href="#" onclick="location.href = 'http://localhost/lebran/profileadmin.php';"><span class="glyphicon glyphicon-home">
                 </span> Home</a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li><a href="#"><span class="glyphicon glyphicon-file"></span> My Record</a></li>
-                </ul>
             </li>
             <li>
-                <a href="#" onclick="location.href = 'http://localhost/lebran/admin_shaper_talks.php';" >Shaper Talks</a>
+                <a href="#" onclick="location.href = 'http://localhost/lebran/admin_shaper_talks.php';" >Schedule of Talks</a>
             </li>
             <li>
-                <a href="#">Contact</a>
+                <a href="#" onclick="location.href = 'http://localhost/lebran/admin_sched_accounts.php';" >Schedule of Accounts</a>
             </li>
         </ul>
 
         <ul class="list-unstyled CTAs">
-            <li><span class="glyphicon glyphicon-object-align-bottom"></span> <span class="label label-success">Position</span> <span class="label label-default"><?php if ($profileDetails) echo $profileDetails['level']; else echo 'Pending'; ?>
+            <li><span class="label label-success"><span class="glyphicon glyphicon-object-align-bottom"></span>  Position</span> <span class="label label-default"><?php if ($profileDetails) echo $levelName. ' - ' .$levelDesc; else echo 'Pending'; ?>
             </span></li>
 
             <li><span class="label label-success"><span class="glyphicon glyphicon-list"></span> Basic Information</span></li>
 
-            <li><span class="glyphicon glyphicon-gift"></span> <?php if ($profileDetails) echo $profileDetails['birthday']; else echo 'NA'; ?></li>
-            <li><span class="glyphicon glyphicon-road"></span> <?php if ($profileDetails) echo $profileDetails['address']; else echo 'NA'; ?></li>
+            <li><span class="glyphicon glyphicon-gift"></span> Birthday: <?php if ($profileDetails) echo date_format(date_create($profileDetails['birthday']),"M d Y"); else echo 'NA'; ?></li>
+            <li><span class="glyphicon glyphicon-road"></span> Address: <?php if ($profileDetails) echo $profileDetails['address']; else echo 'NA'; ?></li>
         </ul>
       </nav>

@@ -38,7 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
       <div class="col-md-6 col-md-offset-3">
 
         <div class = "panel panel-default fade in lebranHomePanel">
-          <div class="panel-heading"> <h1 style="text-align: center">LeBran (LOGO)</h1></div>
+          <div class="panel-heading image"> <h1 style="text-align: center">LeBran</h1>
+           <div class="imagehere"></div>
+          </div>
           <div class = "panel-body">
             <ul class="nav nav-tabs nav-justified">
               <li class="active"><a data-toggle="tab" href="#loginScreen">LOGIN</span></a></li>
