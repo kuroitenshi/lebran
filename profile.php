@@ -33,21 +33,7 @@ else {
   
   <div id="content">
 
-    <div class="hideButton">
-        <div class="navbar-header">
-            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                <i class="glyphicon glyphicon-chevron-left" id="hideme"></i>
-                <span id="hidemetext">Hide</span>
-            </button>
-        </div>
-    </div>
-
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Edit Profile</a></li>
-              <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-          </ul>
-      </div>
+    <?php include 'topnavbar.php' ?>
 
   <div class="container heading col-lg-12">
     <div class="panel panel-default">
@@ -158,6 +144,8 @@ else {
               $('#hideme').css('padding-left', '20px');
             }
          });
+
+          $('.list-unstyled li:nth-child(2)').addClass('active');
      });
  </script>
 </body>

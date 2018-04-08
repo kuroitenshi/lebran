@@ -1,13 +1,16 @@
 <?php 
 $first_name = $_SESSION['first_name'];
-$last_name = $_SESSION['last_name'];
+$last_name = $_SESSION['last_name'];;
+$type = $_SESSION['type'];
 
 if (isset($profileDetails['id']) == 1){
-    $row = $mysqli->query("SELECT level_name, level_description from level where id = " .$profileDetails['level']);
-    $profileRow = $row -> fetch_assoc();
+    if($profileDetails['level'] != null){
+        $row = $mysqli->query("SELECT level_name, level_description from level where id = " .$profileDetails['level']);
+        $profileRow = $row -> fetch_assoc();
 
-    $levelName = $profileRow['level_name'];
-    $levelDesc = $profileRow['level_description'];
+        $levelName = $profileRow['level_name'];
+        $levelDesc = $profileRow['level_description'];
+    }
 }
 
 ?>
@@ -25,7 +28,7 @@ if (isset($profileDetails['id']) == 1){
             </div>
             <h5><?php  echo '' .$first_name. ' ' .$last_name. ''; ?> </h5>
           </div>
-
+            <?php if($type == 'admin'){?>
             <li>
                 <a href="#" onclick="location.href = 'http://localhost/lebran/profileadmin.php';"><span class="glyphicon glyphicon-home">
                 </span> Home</a>
@@ -36,10 +39,22 @@ if (isset($profileDetails['id']) == 1){
             <li>
                 <a href="#" onclick="location.href = 'http://localhost/lebran/admin_sched_accounts.php';" >Schedule of Accounts</a>
             </li>
+            <?php } else {?>
+             <li>
+                <a href="#" onclick="location.href = 'http://localhost/lebran/profile.php';"><span class="glyphicon glyphicon-home">
+                </span> Home</a>
+            </li>
+            <?php } ?>
         </ul>
 
         <ul class="list-unstyled CTAs">
-            <li><span class="label label-success"><span class="glyphicon glyphicon-object-align-bottom"></span>  Position</span> <span class="label label-default"><?php if ($profileDetails) echo $levelName. ' - ' .$levelDesc; else echo 'Pending'; ?>
+            <li><span class="label label-success"><span class="glyphicon glyphicon-object-align-bottom"></span>  Position</span> <span class="label label-default"><?php 
+                if (isset($levelName) && isset($levelDesc)){
+                    echo $levelName. ' - ' .$levelDesc;
+                } 
+                else {
+                    echo 'Pending';
+                } ?>
             </span></li>
 
             <li><span class="label label-success"><span class="glyphicon glyphicon-list"></span> Basic Information</span></li>

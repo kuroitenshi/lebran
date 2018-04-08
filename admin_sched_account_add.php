@@ -17,7 +17,7 @@ include 'css/loadBootstrap.html'
 <?php include 'navbar.php' ?>
 
 <div id="content">
-<?php include 'topnavbar.html' ?>
+<?php include 'topnavbar.php' ?>
 
 <ol class="breadcrumb">
     <li><a href="admin_sched_accounts.php">Schedule of Accounts</a></li>

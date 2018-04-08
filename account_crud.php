@@ -27,11 +27,15 @@
 
             }else{
                 $accountAmendRecords = $accountAmendResult->fetch_assoc();
-                $remarksIDSelected = $accountAmendRecords['remarks'];                         
+                $remarksIDSelected = $accountAmendRecords['remarks'];     
+                $levelSelected = $accountAmendRecords['level'];
                
                 $accountRecordToAmendRemarkQuery = $mysqli->query("SELECT * FROM remarks WHERE id  = '$remarksIDSelected'");
                 $accountRecordToAmendRemark = $accountRecordToAmendRemarkQuery->fetch_assoc();
-               
+
+                $levelquery = $mysqli->query("SELECT * FROM level WHERE id  = '$levelSelected'");
+                $levelToAmend = $levelquery->fetch_assoc();
+
                 $accountRecordToAmendShapersQuery = $mysqli->query("SELECT DISTINCT SHAPER_MAP.USER_ID AS userid, USERS.FIRST_NAME as first_name, USERS.LAST_NAME as last_name FROM shaper_map INNER JOIN users ON USERS.ID = SHAPER_MAP.USER_ID WHERE SHAPER_MAP.ACCOUNT_ID = '$accountAmend' ");
 
                 $accountRecordHeadQuery = $mysqli->query("SELECT DISTINCT HEAD_MAP.USER_ID AS userid, USERS.FIRST_NAME as first_name, USERS.LAST_NAME as last_name FROM head_map INNER JOIN USERS ON USERS.ID = HEAD_MAP.USER_ID WHERE HEAD_MAP.ACCOUNT_ID = '$accountAmend' ");

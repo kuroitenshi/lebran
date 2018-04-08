@@ -8,8 +8,6 @@ session_start();
 <head>
   <title> LeBran - Welcome! </title>
   <?php include 'css/loadBootstrap.html'; ?>
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <?php 
@@ -44,11 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
           <div class = "panel-body">
             <ul class="nav nav-tabs nav-justified">
               <li class="active"><a data-toggle="tab" href="#loginScreen">LOGIN</span></a></li>
-              <li><a data-toggle="tab" href="#registerScreen">SIGN IN</a></li>
+              <li><a data-toggle="tab" href="#registerScreen">SIGN UP</a></li>
           
             </ul>
             <div class="tab-content">
-              <div id="loginScreen" class="tab-pane fade in active">
+              <div id="loginScreen" class="tab-pane in active">
                 
               <br>
                 <form action="index.php" method="post" autocomplete="off">
@@ -74,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                   
                 </form>
               </div>
-              <div id="registerScreen" class="tab-pane fade">
+              <div id="registerScreen" class="tab-pane">
           <br>
           <form action="index.php" method="post" autocomplete="off" enctype="multipart/form-data">
           <h5>Profile Details</h5>
@@ -174,7 +172,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
       
   </div>
+<script src='js/jquery.min.js'></script>
 
+ <!-- Bootstrap Js CDN -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script>
     $("document").ready(function(){
 
@@ -184,6 +185,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     });
   </script>
   <script src="js/index.js"></script>
-
 </body>
 </html>

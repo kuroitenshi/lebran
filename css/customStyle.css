@@ -234,6 +234,11 @@ a.article, a.article:hover {
     font-family: 'Raleway';
 }
 
+.userPanel.activeUser{
+    background: #26A65B;
+    color:white;
+}
+
 .shaperRecord .form-group{
     margin-top: 20px !important;
 }

@@ -30,7 +30,7 @@ include 'css/loadBootstrap.html';
 
 <div id="content">
   
-  <?php include 'topnavbar.html' ?>
+  <?php include 'topnavbar.php' ?>
 
   <ol class="breadcrumb">
     <li><a href="profileadmin.php">Shaper Record</a></li>

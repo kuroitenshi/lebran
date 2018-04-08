@@ -17,7 +17,7 @@ include 'css/loadBootstrap.html'
 <?php include 'navbar.php' ?>
 
 <div id="content">
-<?php include 'topnavbar.html' ?>
+<?php include 'topnavbar.php' ?>
 
 <ol class="breadcrumb">
     <li><a href="admin_sched_accounts.php">Schedule of Accounts</a></li>
@@ -120,9 +120,14 @@ include 'css/loadBootstrap.html'
                     <div class="form-group col-md-4">
                         <label> Level:  <span class="req"></span> </label>
                          <select class="form-control" name="level">
-                             <?php foreach($levelList as $level): ?>
-                                <option value="<?= $level['id']; ?>"><?php echo $level['level_name']. ' ' .$level['level_description']; ?></option>
-                            <?php endforeach; ?>
+                             <?php foreach($levelList as $level){ 
+                              if ($level['id'] == $levelToAmend['id']) {
+                                echo('<option selected="selected" value='.$level['id'].'>'.$level['level_name'].' ' .$level['level_description']. '</option>');
+                                  } else {
+                                      echo('<option value='.$level['id'].'>'.$level['level_name']. ' '.$level['level_description']. '</option>');
+                                  }
+                               } ?>
+                                }
                         </select>
                     </div>
                 </div>

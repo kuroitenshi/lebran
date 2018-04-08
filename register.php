@@ -61,8 +61,8 @@ if ( $result->num_rows > 0 ) {
 else { // Email doesn't already exist in a database, proceed...
 
     // active is 0 by DEFAULT (no need to include it here)
-    $sql = "INSERT INTO users (first_name, last_name, email, password, hash) " 
-            . "VALUES ('$first_name','$last_name','$email','$password', '$hash')";
+    $sql = "INSERT INTO users (first_name, last_name, email, password, hash, type) " 
+            . "VALUES ('$first_name','$last_name','$email','$password', '$hash', 'common')";
 
     
     // Add user to the database
@@ -91,7 +91,7 @@ else { // Email doesn't already exist in a database, proceed...
 
         $newUserId = $mysqli->insert_id;
         $profileSQL = "INSERT INTO PROFILE (userID, head_shot, address, birthday, account_number, account_name, level)
-        VALUES ('$newUserId','$new_file_name','$address','$birthday','$accountNumber','$accountName',1)";
+        VALUES ('$newUserId','$new_file_name','$address','$birthday','$accountNumber','$accountName', null)";
 
         $mysqli->query($profileSQL);
         //Add Confirmation Page
